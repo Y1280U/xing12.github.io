@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="jquery-3.5.1.min.js"></script>
+    <title>翻牌遊戲</title>
+    <style>
+        div{
+            width: 1500px;
+            height: 300px;
+
+
+        }
+        .upcard{
+            width:230px;
+            height:230px;
+            border-radius: 99em;
+            background-image: url(1.jpg);
+
+        }
+        .downcard{
+            width:230px;
+            height:230px;
+            border-radius: 99em;
+            background-image: url(1.jpg);
+            background-color: deepskyblue
+            
+        }
+        
+    </style>
+</head>
+<body>
+        <body style="background-color: lightblue"></body>
+            
+        </body>
+    <div>
+        <input type="button" value="" class="upcard" style="color:rgb(230, 116, 64);font-size: 120px;float:right;">
+        <input type="button" value="" class="upcard" style="color:rgb(230, 116, 64);font-size: 120px;float:right;">
+        <input type="button" value="" class="upcard" style="color:rgb(230, 116, 64);font-size: 120px;float:right;">
+        <input type="button" value="" class="upcard" style="color:rgb(230, 116, 64);font-size: 120px;float:right;">
+        <input type="button" value="" class="upcard" style="color:rgb(230, 116, 64);font-size: 120px;float:right;">
+
+    </div>
+    <div>
+        <input type="button" value="" class="downcard" style="color:rgb(230, 116, 64);font-size: 120px;float:right;">
+        <input type="button" value="" class="downcard" style="color:rgb(230, 116, 64);font-size: 120px;float:right;">
+        <input type="button" value="" class="downcard" style="color:rgb(230, 116, 64);font-size: 120px;float:right;">
+        <input type="button" value="" class="downcard" style="color:rgb(230, 116, 64);font-size: 120px;float:right;">
+        <input type="button" value="" class="downcard" style="color:rgb(230, 116, 64);font-size: 120px;float:right;">
+
+    </div>
+    <input type="button" value="開始遊戲" id="beg" style="color:white;width:170px;height:60px;font-size: 40px;background-color: cornflowerblue;" >
+    <input type="button" value="回首頁" style="color:white;width:170px;height:60px;font-size: 40px;background-color: cornflowerblue;">
+
+</body>
+</html>
+<script>
+s=['1','2','3','4','5'];
+var turn="up";
+justclickdata="";
+var rightclick=0;
+    function valClear(){
+        for(i=0;i<10;i++){
+            $(".upcard:eq("+i+")").val("");
+            $(".downcard:eq("+i+")").val("");
+        }
+        
+    }
+    $("#beg").click(function(){
+        turn="up";
+        rightclick=0;
+        s.sort(function(){
+            return Math.random()>0.5?1:-1;
+        });
+        for(i=0;i<10;i++){
+            $(".upcard:eq("+i+")").val(s[i]);
+            $(".upcard:eq("+i+")").data("num",s[i]);
+            
+        }
+        s.sort(function(){
+            return Math.random()>0.5?1:-1;
+        });
+        for(i=0;i<10;i++){
+            $(".downcard:eq("+i+")").val(s[i]);
+            $(".downcard:eq("+i+")").data("num",s[i]);
+        }
+        setTimeout("valClear()",3000);
+         
+    });
+
+    $(".upcard").click(function(){
+        if(turn=="up"){ 
+            $(this).val($(this).data("num"));
+            turn="down";
+            justclickdata=$(this).data("num");
+        }
+    });
+    $(".downcard").click(function(){
+        if(turn=="down"){
+            if($(this).data("num")==justclickdata) {
+                $(this).val($(this).data("num"));
+                turn="up";
+                rightclick++;
+                if(rightclick==5){
+                    alert("You Win!!!");
+                }
+            }else{
+                for(i=0;i<10;i++){
+                    $(".upcard:eq("+i+")").val("");
+                    $(".downcard:eq("+i+")").val("");
+                }
+                turn="up";
+                rightclick=0;
+            }
+            
+           
+      
+        }
+    });
+    
+</script>
+
+
+
+
+
+
+
